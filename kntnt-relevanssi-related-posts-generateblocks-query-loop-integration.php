@@ -20,7 +20,7 @@ add_filter( 'generateblocks_query_loop_args', function ( $query_args, $attribute
 	if ( isset( $post->ID ) && in_array( 'relevanssi-related-posts', explode( ' ', $block->attributes['className'] ?? '' ) ) && function_exists( 'relevanssi_get_related_post_ids' ) ) {
 		$query_args = [
 			'post__in' => relevanssi_get_related_post_ids( $post->ID ),
-    ];
+		];
 	}
 	return $query_args;
 }, 10, 3 );
