@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || die;
 
 add_filter( 'generateblocks_query_loop_args', function ( $query_args, $attributes, $block ) {
 	global $post;
-	if ( apply_filter( 'kntnt-relevanssi-related-posts-generateblocks-query-loop-integration', true ) && isset( $post->ID ) && in_array( 'relevanssi-related-posts', explode( ' ', $block->attributes['className'] ?? '' ) ) && function_exists( 'relevanssi_get_related_post_ids' ) ) {
+	if ( apply_filter( 'kntnt-relevanssi-related-posts-generateblocks-query-loop-integration', true, $query_args ) && isset( $post->ID ) && in_array( 'relevanssi-related-posts', explode( ' ', $block->attributes['className'] ?? '' ) ) && function_exists( 'relevanssi_get_related_post_ids' ) ) {
 		$query_args = [
 			'post__in' => relevanssi_get_related_post_ids( $post->ID ),
 		];
