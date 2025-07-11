@@ -29,7 +29,7 @@ add_filter( 'generateblocks_query_loop_args', function ( $query_args, $attribute
 	}
 
 	/**
-	 * Filter that allows external to contrl whether or not to proceed with the integration.
+	 * Filter that allows external to control whether or not to proceed with the integration.
 	 *
 	 * @param bool  $proceed    Whether to proceed with the integration.
 	 * @param array $query_args The query arguments.
