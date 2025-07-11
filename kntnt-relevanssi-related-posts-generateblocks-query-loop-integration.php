@@ -5,7 +5,7 @@
  * Plugin Name:       Kntnt Relevanssi Related Posts and GenerateBlocks Query Loop Integration.
  * Plugin URI:        https://github.com/Kntnt/kntnt-relevanssi-related-posts-generateblocks-query-loop-integration.php
  * Description:       Replaces the query configured in GenerateBlocks Query Loop with a query returning related posts from Relevanssi if the block wrapped by GenerateBlocks Query Loop (e.g. GenerateBlocks Grid) has the class `relevanssi-related-posts`.
- * Version:           1.1.0
+ * Version:           1.2.0
  * Author:            Thomas Barregren
  * Author URI:        https://www.kntnt.com/
  * License:           GPL-3.0+
@@ -17,9 +17,12 @@ defined( 'ABSPATH' ) || die;
 
 add_filter( 'generateblocks_query_loop_args', function ( $query_args, $attributes, $block ) {
 	global $post;
-	if ( apply_filters( 'kntnt-relevanssi-related-posts-generateblocks-query-loop-integration', true, $query_args ) && isset( $post->ID ) && in_array( 'relevanssi-related-posts', explode( ' ', $block->attributes['className'] ?? '' ) ) && function_exists( 'relevanssi_get_related_post_ids' ) ) {
+	if ( function_exists( 'relevanssi_get_related_post_ids' ) && isset( $post->ID ) & in_array( 'relevanssi-related-posts', explode( ' ', $block->attributes['className'] ?? '' ) ) && apply_filters( 'kntnt-relevanssi-related-posts-generateblocks-query-loop-integration', true, $query_args ) ) {
 		$query_args = [
 			'post__in' => relevanssi_get_related_post_ids( $post->ID ),
+			'orderby' => 'post__in',
+			'posts_per_page' => - 1,
+			'ignore_sticky_posts' => 1,
 		];
 	}
 	return $query_args;
